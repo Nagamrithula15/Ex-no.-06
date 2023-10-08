@@ -1,0 +1,118 @@
+//program 01//
+import java.util.Scanner;
+
+class EmployeeException extends Exception {
+    public EmployeeException(String message) {
+        super(message);
+    }
+}
+
+class EmployeeMessages {
+    public static final String[] ERROR_MESSAGES = {
+        "Employee number must be numeric, between 1000 and 9999.",
+        "Hourly pay rate must be numeric, between $9.00 and $25.00."
+    };
+}
+
+public class EmployeeDataEntry {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            int employeeNumber = getEmployeeNumber(scanner);
+            double hourlyPayRate = getHourlyPayRate(scanner);
+            displayMessage("Valid employee data");
+        } catch (EmployeeException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+
+    private static int getEmployeeNumber(Scanner scanner) throws EmployeeException {
+        System.out.print("Enter employee number: ");
+        String input = scanner.nextLine();
+
+        try {
+            int employeeNumber = Integer.parseInt(input);
+            if (employeeNumber < 1000 || employeeNumber > 9999) {
+                throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[0]);
+            }
+            return employeeNumber;
+        } catch (NumberFormatException e) {
+            throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[0]);
+        }
+    }
+
+    private static double getHourlyPayRate(Scanner scanner) throws EmployeeException {
+        System.out.print("Enter hourly pay rate: ");
+        String input = scanner.nextLine();
+
+        try {
+            double hourlyPayRate = Double.parseDouble(input);
+            if (hourlyPayRate < 9.00 || hourlyPayRate > 25.00) {
+                throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[1]);
+            }
+            return hourlyPayRate;
+        } catch (NumberFormatException e) {
+            throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[1]);
+        }
+    }
+
+    private static void displayMessage(String message) {
+        System.out.println(message);
+    }
+}
+//program 02//
+import java.util.Scanner;
+
+public class ExceptionProgram {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter numerator: ");
+            int numerator = scanner.nextInt();
+            System.out.print("Enter denominator: ");
+            int denominator = scanner.nextInt();
+
+            int result = numerator / denominator;
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException: " + e.getMessage());
+        }
+        try {
+            System.out.print("The array values are : ");
+            int[] numbers = {1, 2, 3, 4, 5};
+            for(int num : numbers)
+                System.out.print(num+" ");
+            System.out.println("\n");
+            System.out.print("Enter index: ");
+            int index = scanner.nextInt();
+            int value = numbers[index];
+            System.out.println("Value at index " + index + ": " + value);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
+        }
+        try {
+            System.out.print("Enter a number to be parsed : ");
+            String input = scanner.next();
+
+            int number = Integer.parseInt(input);
+            System.out.println("Parsed number: " + number);
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+        }
+        try {
+            System.out.print("Enter a string: ");
+            String input = scanner.next();
+            System.out.print("Enter index: ");
+            int index = scanner.nextInt();
+            char character = input.charAt(index);
+            System.out.println("Character at "+ index + " : " + character);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("StringIndexOutOfBoundsException: " + e.getMessage());
+        }
+        scanner.close();
+    }
+}
